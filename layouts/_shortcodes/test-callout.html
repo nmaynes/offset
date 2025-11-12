@@ -1,0 +1,27 @@
+{{- $type := .Get "type" | default "info" -}}
+{{- $color := "3498db" -}}
+{{- $bg := "e8f4f8" -}}
+{{- $icon := "ℹ️" -}}
+
+{{- if eq $type "warning" -}}
+    {{- $color = "f39c12" -}}
+    {{- $bg = "fff4e6" -}}
+    {{- $icon = "⚠️" -}}
+{{- else if eq $type "danger" -}}
+    {{- $color = "e74c3c" -}}
+    {{- $bg = "fdecea" -}}
+    {{- $icon = "⛔" -}}
+{{- else if eq $type "success" -}}
+    {{- $color = "27ae60" -}}
+    {{- $bg = "e8f8f0" -}}
+    {{- $icon = "✅" -}}
+{{- end -}}
+
+<div style="background: #{{ $bg }}; padding: 1rem; margin: 1rem 0; border-left: 4px solid #{{ $color }};">
+    <strong>{{ $icon }} {{ upper $type }}:</strong>
+    {{- with .Inner }}
+    <div style="margin-top: 0.5rem;">
+        {{ . | markdownify }}
+    </div>
+    {{- end }}
+</div>

@@ -1,0 +1,12 @@
+name = "offset"
+license = "MIT"
+licenselink = "https://github.com/colorchestra/smol/blob/master/LICENSE.md"
+description = ""
+homepage = ""
+tags = ["blog"]
+features = ["blog", "privacy", "responsive"]
+min_version = "0.152.0"
+
+[author]
+  name = "nmaynes"
+  homepage = "mayn.es"

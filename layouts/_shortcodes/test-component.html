@@ -1,0 +1,10 @@
+<div style="background: #e8f5e9; padding: 1rem; margin: 1rem 0; border: 2px dashed #4caf50; border-radius: 4px;">
+    <strong>🧩 Shortcode:</strong> test-component<br>
+    <strong>📁 Location:</strong> layouts/_shortcodes/test-component.html
+    {{- with .Inner }}
+    <div style="margin-top: 0.5rem; padding: 0.5rem; background: white; border-radius: 3px;">
+        <strong>Inner Content:</strong><br>
+        {{ . }}
+    </div>
+    {{- end }}
+</div>

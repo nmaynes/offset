@@ -1,0 +1,32 @@
+{{ define "main" }}
+<main>
+    <h2>Recent Posts</h2>
+
+    {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+
+    {{ if $paginator.Pages }}
+    <ul class="post-list">
+        {{ range $paginator.Pages }}
+        <li>
+            <div class="post-title">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </div>
+            <div class="post-meta">
+                <span class="post-date">{{ .Date.Format "January 2, 2006" }}</span>
+                {{ if .Params.categories }}
+                <span>in {{ delimit .Params.categories ", " }}</span>
+                {{ end }}
+            </div>
+            {{ if .Summary }}
+            <p>{{ .Summary }}</p>
+            {{ end }}
+        </li>
+        {{ end }}
+    </ul>
+    {{ else }}
+    <p>No posts found.</p>
+    {{ end }}
+
+    {{ partial "pagination.html" . }}
+</main>
+{{ end }}

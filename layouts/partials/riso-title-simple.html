@@ -1,0 +1,29 @@
+{{/*
+  Simplified Risograph title using text-shadow
+  Usage: {{ partial "riso-title-simple.html" (dict "title" .Title "permalink" .RelPermalink) }}
+*/}}
+
+{{- $title := .title -}}
+{{- $permalink := .permalink -}}
+
+{{/* Generate hash and extract numeric values */}}
+{{- $hash := md5 $permalink -}}
+{{- $hashInt := substr $hash 0 8 -}}
+
+{{/* Extract bytes and convert to offsets (-3 to 3 pixels) */}}
+{{- $byte1 := substr $hash 0 2 -}}
+{{- $byte2 := substr $hash 2 2 -}}
+{{- $byte3 := substr $hash 4 2 -}}
+
+{{/* Simple mapping: convert hex to decimal, then modulo to get range */}}
+{{- $offset1X := mod (int (printf "0x%s" $byte1 | default 0)) 7 | sub 3 -}}
+{{- $offset1Y := mod (int (printf "0x%s" $byte2 | default 0)) 7 | sub 3 -}}
+{{- $offset2X := mod (int (printf "0x%s" $byte3 | default 0)) 7 | sub 3 -}}
+{{- $offset2Y := mod (int (printf "0x%s" (substr $hash 6 2) | default 0)) 7 | sub 3 -}}
+
+<span class="riso-title-shadow" style="
+    --riso-offset2-x: {{ $offset1X }}px;
+    --riso-offset2-y: {{ $offset1Y }}px;
+    --riso-offset3-x: {{ $offset2X }}px;
+    --riso-offset3-y: {{ $offset2Y }}px;
+">{{ $title }}</span>

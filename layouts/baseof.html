@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+
+    <!-- Basic meta tags -->
+    <meta name="description" content="{{ .Description | default .Site.Params.subtitle }}">
+    <meta name="author" content="{{ .Site.Author.name }}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Design System -->
+    <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+    {{ block "styles" . }}{{ end }}
+</head>
+<body>
+    {{ block "header" . }}
+    <header>
+        <h1><a href="/">{{ .Site.Title }}</a></h1>
+        {{ with .Site.Params.subtitle }}
+        <p>{{ . }}</p>
+        {{ end }}
+
+        {{ if .Site.Menus.main }}
+        <nav>
+            <ul>
+            {{ range .Site.Menus.main }}
+                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+            {{ end }}
+            </ul>
+        </nav>
+        {{ end }}
+    </header>
+    {{ end }}
+
+    {{ block "main" . }}{{ end }}
+
+    {{ block "footer" . }}
+    <footer>
+        <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}</p>
+        {{ if .Site.Menus.footer }}
+        <nav>
+            <ul>
+            {{ range .Site.Menus.footer }}
+                <li><a href="{{ .URL }}" target="_blank" rel="noopener">{{ .Name }}</a></li>
+            {{ end }}
+            </ul>
+        </nav>
+        {{ end }}
+    </footer>
+    {{ end }}
+</body>
+</html>

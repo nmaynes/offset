@@ -1,0 +1,120 @@
+{{ define "main" }}
+<main>
+    <!-- Component Label -->
+    <div style="background: #f0f0f0; padding: 1rem; margin-bottom: 2rem; border-left: 4px solid #3498db;">
+        <strong>🔍 Template Info:</strong> <code>layouts/_test/single.html</code><br>
+        <strong>📦 Base Template:</strong> <code>layouts/baseof.html</code><br>
+        <strong>📄 Type:</strong> Single Post View
+    </div>
+
+    {{- if eq .File.ContentBaseName "riso-test" -}}
+    <!-- Risograph Effect Test Section -->
+    <div style="background: #ffe8f0; padding: 1.5rem; margin-bottom: 2rem; border-left: 4px solid #ff665e;">
+        <strong>🎨 Risograph Effect Test (Template-Rendered)</strong>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">These titles are rendered directly in the template using Hugo's partial system.</p>
+
+        {{- $hash := md5 .RelPermalink -}}
+        {{- $offset1X := mod (int (printf "0x%s" (substr $hash 0 2))) 7 | sub 3 -}}
+        {{- $offset1Y := mod (int (printf "0x%s" (substr $hash 2 2))) 7 | sub 3 -}}
+        {{- $offset2X := mod (int (printf "0x%s" (substr $hash 4 2))) 7 | sub 3 -}}
+        {{- $offset2Y := mod (int (printf "0x%s" (substr $hash 6 2))) 7 | sub 3 -}}
+
+        <h2 class="riso-title-shadow" style="
+            --riso-offset2-x: {{ $offset1X }}px;
+            --riso-offset2-y: {{ $offset1Y }}px;
+            --riso-offset3-x: {{ $offset2X }}px;
+            --riso-offset3-y: {{ $offset2Y }}px;
+            margin: 1rem 0;
+        ">Template-Rendered Risograph Title</h2>
+
+        <h2 class="riso-title-shadow riso-scheme-fluor" style="
+            --riso-offset2-x: 3px;
+            --riso-offset2-y: -2px;
+            --riso-offset3-x: -2px;
+            --riso-offset3-y: 3px;
+            margin: 1rem 0;
+        ">Fluorescent Color Scheme</h2>
+
+        <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+            Offsets calculated: X1={{ $offset1X }}px, Y1={{ $offset1Y }}px, X2={{ $offset2X }}px, Y2={{ $offset2Y }}px
+        </p>
+    </div>
+    {{- end -}}
+
+    <article>
+        <!-- Header Component -->
+        <div style="background: #e8f4f8; padding: 0.5rem 1rem; margin-bottom: 1rem; border-left: 4px solid #2980b9;">
+            <strong>📋 Component:</strong> Article Header
+        </div>
+
+        <header>
+            <h1>{{ .Title }}</h1>
+            <div class="post-meta">
+                <time datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
+                {{ if .Params.categories }}
+                <span>in {{ delimit .Params.categories ", " }}</span>
+                {{ end }}
+                {{ if .Params.tags }}
+                <div class="tags">
+                    Tags:
+                    {{ range .Params.tags }}
+                    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </header>
+
+        <!-- Content Component -->
+        <div style="background: #e8f4f8; padding: 0.5rem 1rem; margin: 1rem 0; border-left: 4px solid #2980b9;">
+            <strong>📋 Component:</strong> Article Content (using <code>.content</code> class)
+        </div>
+
+        <div class="content">
+            {{ .Content }}
+        </div>
+
+        <!-- Navigation Component -->
+        {{ if or .PrevInSection .NextInSection }}
+        <div style="background: #fff4e6; padding: 0.5rem 1rem; margin-top: 2rem; border-left: 4px solid #f39c12;">
+            <strong>🧩 Component:</strong> Post Navigation (using <code>.post-navigation</code> class)
+        </div>
+
+        <nav class="post-navigation">
+            {{ with .PrevInSection }}
+            <div class="prev-post">
+                <span>← Previous</span>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </div>
+            {{ end }}
+            {{ with .NextInSection }}
+            <div class="next-post">
+                <span>Next →</span>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </div>
+            {{ end }}
+        </nav>
+        {{ else }}
+        <div style="background: #fff4e6; padding: 0.5rem 1rem; margin-top: 2rem; border-left: 4px solid #f39c12;">
+            <strong>ℹ️ Info:</strong> No previous/next posts available for navigation component
+        </div>
+        {{ end }}
+    </article>
+
+    <!-- CSS Classes Reference -->
+    <div style="background: #f0f0f0; padding: 1rem; margin-top: 3rem; border-left: 4px solid #95a5a6;">
+        <strong>🎨 CSS Classes Used:</strong>
+        <ul style="margin: 0.5rem 0 0 1.5rem; font-family: monospace; font-size: 0.9rem;">
+            <li><code>.post-meta</code> - Metadata container</li>
+            <li><code>.post-date</code> - Date styling</li>
+            <li><code>.tags</code> - Tag list container</li>
+            <li><code>.content</code> - Main content area</li>
+            <li><code>.post-navigation</code> - Navigation container</li>
+            <li><code>.prev-post</code> - Previous post link</li>
+            <li><code>.next-post</code> - Next post link</li>
+        </ul>
+    </div>
+</main>
+{{ end }}
