@@ -359,3 +359,81 @@ a.riso-link:hover::before {
         display: none;
     }
 }
+
+/* === RISOGRAPH DROPCAP === */
+
+/* Dropcap container */
+.riso-dropcap {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 120px;
+    height: 120px;
+    margin-top: calc(var(--space-1) * -7); /* Negative top margin to pull up */
+    margin-right: 0.125rem; /* Half of mr-1 (0.25rem / 2) */
+    margin-bottom: calc(var(--space-1) * -1);
+    margin-left: calc(var(--space-1) * -7);
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+    line-height: 1;
+}
+
+/* Blob background */
+.riso-dropcap-blob {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Letter on top */
+.riso-dropcap-letter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+
+    /* Typography - base mobile */
+    color: white;
+    font-family: var(--font-sans);
+    font-size: 2.25rem; /* text-4xl = 36px */
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.1em; /* tracking-widest */
+    line-height: 1;
+    text-align: center;
+
+    /* Enhance readability */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    user-select: none;
+}
+
+/* Small screens and up (640px+) */
+@media (min-width: 640px) {
+    .riso-dropcap-letter {
+        font-size: 4.5rem; /* sm:text-7xl = 72px */
+    }
+}
+
+/* Medium screens and up (768px+) */
+@media (min-width: 768px) {
+    .riso-dropcap-letter {
+        font-size: 3.75rem; /* md:text-6xl = 60px */
+    }
+}
+
+/* Large screens and up (1024px+) */
+@media (min-width: 1024px) {
+    .riso-dropcap-letter {
+        font-size: 3rem; /* lg:text-5xl = 48px */
+    }
+}
+
+/* Print: remove dropcaps (decorative only) */
+@media print {
+    .riso-dropcap {
+        display: none;
+    }
+}

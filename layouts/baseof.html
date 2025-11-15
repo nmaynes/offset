@@ -9,12 +9,7 @@
     <meta name="description" content="{{ .Description | default .Site.Params.subtitle }}">
     <meta name="author" content="{{ .Site.Author.name }}">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Design System -->
+    <!-- Design System (includes custom fonts) -->
     <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
     {{ block "styles" . }}{{ end }}
 </head>
