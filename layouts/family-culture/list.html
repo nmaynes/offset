@@ -1,5 +1,5 @@
 {{ define "main" }}
-<main>
+<main id="main-content">
     <h1>{{ .Title }}</h1>
 
     {{ with .Content }}
@@ -22,7 +22,7 @@
                 {{ end }}
             </div>
             {{ if .Summary }}
-            <p>{{ .Summary }}</p>
+            <div class="post-excerpt">{{ .Summary }}</div>
             {{ end }}
         </li>
         {{ end }}

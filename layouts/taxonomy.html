@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Taxonomy</title>
-</head>
-<body>
+{{ define "main" }}
+<main id="main-content">
+    <h1>{{ .Title }}</h1>
 
-</body>
-</html>
+    {{ with .Content }}
+    <div class="section-content">
+        {{ . }}
+    </div>
+    {{ end }}
+
+    {{ with .Data.Terms.Alphabetical }}
+    <ul class="tag-list">
+        {{ range . }}
+        <li>
+            <a class="tag-link" href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+            <span class="post-meta">({{ .Count }})</span>
+        </li>
+        {{ end }}
+    </ul>
+    {{ else }}
+    <p>No terms found.</p>
+    {{ end }}
+</main>
+{{ end }}

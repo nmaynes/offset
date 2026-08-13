@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Section</title>
-</head>
-<body>
+{{ define "main" }}
+<main id="main-content">
+    {{ with .Title }}
+    <h1>{{ . }}</h1>
+    {{ end }}
 
-</body>
-</html>
+    {{ with .Content }}
+    <div class="section-content">
+        {{ . }}
+    </div>
+    {{ end }}
+
+    {{ if .Pages }}
+    <ul class="post-list">
+        {{ range .Pages }}
+        <li>
+            <div class="post-title">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </div>
+            <div class="post-meta">
+                <span class="post-date">{{ .Date.Format "January 2, 2006" }}</span>
+                {{ if .Params.categories }}
+                <span>in {{ delimit .Params.categories ", " }}</span>
+                {{ end }}
+            </div>
+            {{ if .Summary }}
+            <div class="post-excerpt">{{ .Summary }}</div>
+            {{ end }}
+        </li>
+        {{ end }}
+    </ul>
+    {{ else }}
+    <p>No content found.</p>
+    {{ end }}
+
+    {{ partial "pagination.html" . }}
+</main>
+{{ end }}

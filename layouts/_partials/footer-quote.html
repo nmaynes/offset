@@ -1,0 +1,42 @@
+{{/*
+  Footer Quote
+  Pulls a quote from the content/quote/ section and renders it with a link
+  back to the source page (for readers to see any commentary added there).
+
+  Usage: {{ partial "footer-quote.html" (dict "context" . "style" "card") }}
+  - context: the current page (required) -- used to deterministically pick
+    which quote to show, so a given page always shows the same quote, but
+    different pages across the site vary. Same seeded-by-URL approach as the
+    risograph dropcaps/blobs, so it stays fully static (no JS) and reproducible.
+  - style: "minimal" | "card" | "riso" (default "card")
+
+  Convention: a quote page (content/quote/*.md) should open its content with
+  a Markdown blockquote (`> ...`) as the very first element -- that's what
+  gets extracted. Quote pages are their own section (not "post"), so they're
+  naturally excluded from anything scoped to mainSections, like Recent Posts.
+*/}}
+{{- $ctx := .context -}}
+{{- $style := .style | default "card" -}}
+{{- $quotePages := where $ctx.Site.RegularPages "Section" "quote" -}}
+
+{{- with $quotePages -}}
+  {{- $hash := md5 $ctx.RelPermalink -}}
+  {{- $index := mod (int (printf "0x%s" (substr $hash 0 6))) (len .) -}}
+  {{- $post := index . $index -}}
+
+  {{- $matches := findRE `(?s)<blockquote>.*?</blockquote>` $post.Content 1 -}}
+  {{- with $matches -}}
+    {{- /* Strip tags to spaces (not empty), so paragraph/tag boundaries don't
+       glue words together, then unescape entities Goldmark introduced (e.g.
+       "'" becomes &rsquo;) explicitly -- plainify alone left entities as
+       literal text here, which the template's auto-escaper then re-escaped
+       into visible "&amp;rsquo;" garbage instead of a plain apostrophe. */ -}}
+    {{- $quoteText := index . 0 | replaceRE `<[^>]+>` " " | htmlUnescape -}}
+    {{- $quoteText = $quoteText | replaceRE `\s+` " " | strings.TrimSpace -}}
+    {{- $quoteText = $quoteText | truncate 350 -}}
+    <div class="footer-quote footer-quote--{{ $style }}">
+      <blockquote class="footer-quote-text">&ldquo;{{ $quoteText }}&rdquo;</blockquote>
+      <p class="footer-quote-source"><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></p>
+    </div>
+  {{- end -}}
+{{- end -}}

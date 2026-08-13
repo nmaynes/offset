@@ -19,7 +19,7 @@ html {
 
 /* === ROOT === */
 body {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     font-size: var(--text-xl);
     font-weight: var(--weight-normal);
     line-height: var(--leading-relaxed);
@@ -332,6 +332,24 @@ th, td {
 th {
     font-weight: var(--weight-semibold);
     background-color: var(--color-bg-secondary);
+}
+
+/* === SKIP LINK === */
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: -9999px;
+    z-index: var(--z-tooltip);
+
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    border-radius: var(--border-radius-md);
+}
+
+.skip-link:focus {
+    left: var(--space-4);
+    top: var(--space-4);
 }
 
 /* === SELECTION === */

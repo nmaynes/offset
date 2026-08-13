@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>P</title>
-</head>
-<body>
+{{ define "main" }}
+<main id="main-content">
+    <article>
+        <header>
+            <h1>{{ .Title }}</h1>
+            <div class="post-meta">
+                {{ if .Date }}
+                <time datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
+                {{ end }}
+                {{ if .Params.categories }}
+                <span>in {{ delimit .Params.categories ", " }}</span>
+                {{ end }}
+                {{ if .Params.tags }}
+                <div class="tags">
+                    Tags:
+                    {{ range .Params.tags }}
+                    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </header>
 
-</body>
-</html>
+        <div class="content">
+            {{ .Content }}
+        </div>
+
+        {{ if or .PrevInSection .NextInSection }}
+        <nav class="post-navigation">
+            {{ with .PrevInSection }}
+            <div class="prev-post">
+                <span>← Previous</span>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </div>
+            {{ end }}
+            {{ with .NextInSection }}
+            <div class="next-post">
+                <span>Next →</span>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </div>
+            {{ end }}
+        </nav>
+        {{ end }}
+    </article>
+</main>
+{{ end }}

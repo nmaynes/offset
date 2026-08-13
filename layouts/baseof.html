@@ -14,6 +14,8 @@
     {{ block "styles" . }}{{ end }}
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
     {{ block "header" . }}
     <header>
         <h1><a href="/">{{ .Site.Title }}</a></h1>
@@ -37,6 +39,7 @@
 
     {{ block "footer" . }}
     <footer>
+        {{ partial "footer-quote.html" (dict "context" . "style" "riso") }}
         <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}</p>
         {{ if .Site.Menus.footer }}
         <nav>
