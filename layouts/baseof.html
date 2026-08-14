@@ -7,7 +7,7 @@
 
     <!-- Basic meta tags -->
     <meta name="description" content="{{ .Description | default .Site.Params.subtitle }}">
-    <meta name="author" content="{{ .Site.Author.name }}">
+    {{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
 
     <!-- Design System (includes custom fonts) -->
     <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
